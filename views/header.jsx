@@ -2,20 +2,16 @@ let React = require('react');
 var Header = React.createClass({
     render: function() {
         return (
-            <html>
-                <head>
-                    <title>{this.props.title}</title>
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet"/>
-                </head>
-                <body>
-                    <div className="container">
-                        {this.props.children}
-                    </div>
-                    <script src="/javascripts/jquery-1.12.2.min.js"></script>
-                    <script src="/javascripts/bootstrap.min.js"></script>
-                </body>
-            </html>
+            <div>
+            <div className="jumbotron">
+                <h1>Hello, NodeJs!</h1>
+
+            </div>
+                <ol className="breadcrumb">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">给我留言</a></li>
+                </ol>
+            </div>
         )
     }
 });

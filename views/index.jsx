@@ -1,16 +1,41 @@
 let React = require('react');
-let Header = require('./Header');
+let Layout = require('./layout');
+let Page = require('./page');
+let Calendar = require('./calendar');
+let CalendarDemo = React.createClass({
+    getDefaultProps: function(){
+        return {
+            holiday: {
+                '3/8': '妇女节'
+            }
+        }
+    },
+    render: function(){
+        return <Calendar {...this.props}/>;
+    }
+});
 const Index = React.createClass({
         render: function() {
-            console.log('xxx');
+            let{data, title, page, total} = this.props;
             return (
-                   <Header title={this.props.title}>
+                   <Layout title={title}>
                         <div className="row">
-                            <div className="col-xs-12 col-sm-6 col-md-8">
-                                {this.props.data}
+                            <div className="col-md-8 blog_art">
+                                {data.map((item, key) =>{
+                                    return (
+                                        <article key={key}>
+                                            <h1>{item.title}</h1>
+                                            <p className="introduction">{item.introduction}...</p>
+                                        </article>
+                                    )
+                                })}
+                                <Page page={page} total={Math.ceil(total/5)} view={'page'}/>
+                            </div>
+                            <div className="col-md-4" style={{background:"#fff"}}>
+                                <CalendarDemo/>
                             </div>
                         </div>
-                   </Header>
+                   </Layout>
                 )
         }
 });
