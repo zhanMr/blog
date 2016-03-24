@@ -24,7 +24,7 @@ const Index = React.createClass({
                                 {data.map((item, key) =>{
                                     return (
                                         <article key={key}>
-                                            <h1>{item.title}</h1>
+                                            <h1><a href={`/detail?id=${item.id}`}>{item.title}</a></h1>
                                             <p className="introduction">{item.introduction}...</p>
                                         </article>
                                     )
