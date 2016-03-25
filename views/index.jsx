@@ -29,7 +29,7 @@ const Index = React.createClass({
                                         </article>
                                     )
                                 })}
-                                <Page page={page} total={Math.ceil(total/5)} view={'page'}/>
+                                <Page page={page} total={Math.ceil(total/5)} view={'index'}/>
                             </div>
                             <div className="col-md-4" style={{background:"#fff"}}>
                                 <CalendarDemo/>

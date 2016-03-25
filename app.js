@@ -27,9 +27,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+
+//托管静态文件，例如图片、css、javascript
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/index', routes);
 app.use('/users', users);
 app.use('/detail', detail);
 /// catch 404 and forwarding to error handler
