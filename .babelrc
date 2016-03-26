@@ -4,7 +4,5 @@
       "react",
       "stage-2"
     ],
-    "plugins": [
-        "transform-strict-mode"
-    ]
+    "plugins": []
   }

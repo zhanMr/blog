@@ -14,7 +14,7 @@ let Page = React.createClass({
         for(let num = startPage; num <= startPage + 5; num ++){
             link.push(<li><a href={`/${view}?page=${num}`}>{num}</a></li>);
         }
-        var prev = total > 1 && page != 1 ? <li><a href={`/${view}?page=${page - 1}`} aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li> : '';
+        let prev = total > 1 && page != 1 ? <li><a href={`/${view}?page=${page - 1}`} aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li> : '';
         let next = page < total ? <li><a href={`/${view}?page=${page + 1}`} aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li> : '';
         return (
                 <nav>

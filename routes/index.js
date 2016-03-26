@@ -3,7 +3,8 @@ let express = require('express');
 let router = express.Router();
 let db = require('../service/db');
 
-router.get('/', function(req, res) {
+// /(index|^\/$)/ 匹配/和/index
+router.get(/(index|^\/$)/, function(req, res) {
     let page = parseInt(req.query.page) || 1;
     let num = 3;
     let sql = 'select * from content limit ' + (page - 1)*num + ',' + ((page - 1)*num + 6);

@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 //文章详情
 var detail = require('./routes/detail');
+var detail = require('./routes/message');
 var app = express();
 
 // view engine setup
@@ -35,6 +36,7 @@ app.use('/', routes);
 app.use('/index', routes);
 app.use('/users', users);
 app.use('/detail', detail);
+app.use('/message', detail);
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
