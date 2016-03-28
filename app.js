@@ -32,6 +32,14 @@ app.use(cookieParser());
 //托管静态文件，例如图片、css、javascript
 app.use(express.static(path.join(__dirname, 'public')));
 
+//验证登录中间件
+/*app.get(/(index|detail)/, function(req, res, next){
+    if(req.cookies && req.cookies.name){
+        next();
+    }else{
+        res.redirect('/login')
+    }
+});*/
 app.use('/', routes);
 app.use('/index', routes);
 app.use('/users', users);

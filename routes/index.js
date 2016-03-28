@@ -5,6 +5,7 @@ let db = require('../service/db');
 
 // /(index|^\/$)/ 匹配/和/index
 router.get(/(index|^\/$)/, function(req, res) {
+    console.log(req.cookies);
     let page = parseInt(req.query.page) || 1;
     let num = 3;
     let sql = 'select * from content limit ' + (page - 1)*num + ',' + ((page - 1)*num + 6);
