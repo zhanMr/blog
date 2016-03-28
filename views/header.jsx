@@ -8,8 +8,8 @@ var Header = React.createClass({
 
             </div>
                 <ol className="breadcrumb">
-                    <li><a href="#">首页</a></li>
-                    <li><a href="#">给我留言</a></li>
+                    <li><a href="/index">首页</a></li>
+                    <li><a href="/message">给我留言</a></li>
                 </ol>
             </div>
         )
