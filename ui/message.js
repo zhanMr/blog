@@ -14,10 +14,10 @@ const Message = React.createClass({
             value: ''
         });
     },
-    handleChange: function(event){
-        this.setState({value: event.target.value});
+    handleChange: function(e){
+        this.setState({value: e.target.value});
     },
-    pullMessage: function(){
+    pullIn: function(){
         let self = this;
         let text = this.state.value;
         if(!text.length){
@@ -48,7 +48,7 @@ const Message = React.createClass({
         return (
             <div>
                 <p><textarea value={value} onChange={this.handleChange}/></p>
-                <p><button  onClick={this.pullMessage} disabled={status ? '' : 'disabled'}>{status ? '提交' : '提交中...'}</button></p>
+                <p><button  onClick={this.pullIn} disabled={status ? '' : 'disabled'}>{status ? '提交' : '提交中...'}</button></p>
             </div>
         )
     }

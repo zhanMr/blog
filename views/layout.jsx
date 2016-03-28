@@ -13,7 +13,7 @@ var Layout = React.createClass({
                 <body>
                     <Header/>
                     <div className="container">
-                    {this.props.children}
+                        {this.props.children}
                     </div>
                     <script src="/js/bundle.js"></script>
                 </body>
