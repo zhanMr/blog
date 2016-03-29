@@ -10,7 +10,7 @@ var detail = require('./routes/detail');
 var message = require('./routes/message');
 var login = require('./routes/login');
 var app = express();
-
+var db = require('./service/db');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 /*app.set('view engine', 'jade');*/
@@ -34,8 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //验证登录中间件
 app.get(/(index|detail)/, function(req, res, next){
     var cookie = req.cookies;
-    if(util.isObject(cookie) && cookie.name && cookie.time){
-        var sql = "select * from login where  username = '" + cookie.name + "' and time = '" + cookie.time + "'";
+    if(util.isObject(cookie) && cookie.pass && cookie.time){
+        var sql = "select * from login where password = '" + cookie.pass + "' and time = '" + cookie.time + "'";
         db(sql, function(err, rows, fields){
             if(!err && rows.length){
                 next();
@@ -47,6 +47,7 @@ app.get(/(index|detail)/, function(req, res, next){
         res.redirect('/login')
     }
 });
+
 app.use('/', routes);
 app.use('/index', routes);
 app.use('/detail', detail);

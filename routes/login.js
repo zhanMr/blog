@@ -1,9 +1,9 @@
 'use strict';
-let express = require('express');
-let router = express.Router();
-let db = require('../service/db');
-let tool = require('../service/tool');
-let toolFun = new tool();
+const express = require('express');
+const router = express.Router();
+const db = require('../service/db');
+const tool = require('../service/tool');
+const toolFun = new tool();
 
 //登录首页
 router.get('/', (req, res)=>{
@@ -14,8 +14,9 @@ router.get('/', (req, res)=>{
 //登录验证
 router.post('/login', (req, res) => {
     let username = req.body.username;
-    let password = req.body.password;
+    let password = toolFun.encrypt(req.body.password, 'sha1');
     let sql = "select * from login where  username = '" + username + "' and password = '" + password + "'";
+    let success = false;
     db(sql, (err, rows, fields) =>{
         if(!err && rows.length){
             //记录登录时间
@@ -24,13 +25,23 @@ router.post('/login', (req, res) => {
             //httpOnly 只能服务端读取cookie
             //expires 缓存过期时间
             let cookieObj = {httpOnly: true, expires: new Date(stamp)};
-            db("update  login set time = " + time + " where username = '" + username + "'", function(){});
-            res.cookie("name", toolFun.encrypt(username, 'md5'), cookieObj);
-            res.cookie("time", toolFun.encrypt(stamp,'md5'), cookieObj);
+            db("update  login set time = " + time + " where username = '" + username + "'", (uerr, urows,ufields)=>{
+                if(!uerr){
+                    res.cookie("pass", password, cookieObj);
+                    res.cookie("time", time, cookieObj);
+                    success = true;
+                }else{
+                    success = false;
+                }
+                res.json({
+                    success: success
+                })
+            });
+        }else{
+            res.json({
+                success: success
+            })
         }
-        res.json({
-            success: !err ? !!rows.length : false
-        })
     });
 });
 
