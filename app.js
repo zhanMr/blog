@@ -4,7 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var util = require('util');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var detail = require('./routes/detail');
@@ -33,13 +33,21 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //验证登录中间件
-/*app.get(/(index|detail)/, function(req, res, next){
-    if(req.cookies && req.cookies.name){
-        next();
+app.get(/(index|detail)/, function(req, res, next){
+    var cookie = req.cookies;
+    if(util.isObject(cookie) && cookie.name && cookie.time){
+        var sql = "select * from login where  username = '" + cookie.name + "' and time = '" + cookie.time + "'";
+        db(sql, function(err, rows, fields){
+            if(!err && rows.length){
+                next();
+            }else{
+                res.redirect('/login')
+            }
+        });
     }else{
         res.redirect('/login')
     }
-});*/
+});
 app.use('/', routes);
 app.use('/index', routes);
 app.use('/users', users);
