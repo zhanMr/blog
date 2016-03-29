@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var util = require('util');
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var detail = require('./routes/detail');
 var message = require('./routes/message');
 var login = require('./routes/login');
@@ -50,7 +49,6 @@ app.get(/(index|detail)/, function(req, res, next){
 });
 app.use('/', routes);
 app.use('/index', routes);
-app.use('/users', users);
 app.use('/detail', detail);
 app.use('/message', message);
 app.use('/login', login);

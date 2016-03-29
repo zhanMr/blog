@@ -1,19 +1,22 @@
 'use strict';
-let express = require('express');
-let router = express.Router();
-let db = require('../service/db');
-let os = require('os');
-router.get('/', function(req, res) {
+const express = require('express');
+const router = express.Router();
+const db = require('../service/db');
+const os = require('os');
+
+router.get('/', (req, res) => {
     res.render('message', { title: '留言'});
 });
-router.post('/message', function(req, res) {
+
+//提交留言
+router.post('/message', (req, res) => {
     let sql = "insert into message (message, os, time) values('" + req.body.message + "','" + os.type() + "','" + new Date() + "')";
-    db(sql, function(err, rows, fields){
-        console.log(err);
+    db(sql, (err, rows, fields) => {
         res.json({
             success: true
         })
     });
 
 });
+
 module.exports = router;

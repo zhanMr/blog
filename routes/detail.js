@@ -1,14 +1,15 @@
 'use strict';
-let express = require('express');
-let router = express.Router();
-let db = require('../service/db');
+const express = require('express');
+const router = express.Router();
+const db = require('../service/db');
 
-router.get('/', function(req, res) {
+//文章页
+router.get('/',(req, res)=> {
     let id = parseInt(req.query.id) || 1;
     let sql = 'select * from content where id = ' + id;
-    db(sql, function(err, rows, fields){
-
+    db(sql, (err, rows, fields) => {
         res.render('detail', { title: '首页' , data: rows});
     })
 });
+
 module.exports = router;
