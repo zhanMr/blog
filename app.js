@@ -6,14 +6,14 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const util = require('util');
+const url = require('url');
 const routes = require('./routes/index');
 const detail = require('./routes/detail');
 const message = require('./routes/message');
 const login = require('./routes/myblog/login');
 const myindex = require('./routes/myblog/index');
-const url = require('url');
-const app = express();
 const db = require('./service/db');
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,17 +31,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //验证登录中间件
-app.get(/(myblog)/, (req, res, next) => {
+app.get(/myblog/, (req, res, next) => {
     let cookie = req.cookies;
-    let isLogin = req.url === '/myblog/login';
+    let loginUrl = '/myblog/login';
+    let isLogin = req.url === loginUrl;
     let isNext = function(){
-        isLogin ? next() : res.redirect('/myblog/login');
+        isLogin ? next() : res.redirect(loginUrl);
     };
     if(util.isObject(cookie) && cookie.pass && cookie.time){
         let sql = "select * from login where password = '" + cookie.pass + "' and time = '" + cookie.time + "'";
         db(sql, function(err, rows, fields){
             if(!err && rows.length){
-                isLogin ? res.redirect('/myblog/index') : next();
+                isLogin ? res.redirect(loginUrl) : next();
             }else{
                 isNext();
             }
