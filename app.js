@@ -1,27 +1,26 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var util = require('util');
-var routes = require('./routes/index');
-var detail = require('./routes/detail');
-var message = require('./routes/message');
-var login = require('./routes/login');
-var app = express();
-var db = require('./service/db');
+'use strict';
+const express = require('express');
+const path = require('path');
+const favicon = require('static-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const util = require('util');
+const routes = require('./routes/index');
+const detail = require('./routes/detail');
+const message = require('./routes/message');
+const login = require('./routes/myblog/login');
+const myindex = require('./routes/myblog/index');
+const url = require('url');
+const app = express();
+const db = require('./service/db');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 /*app.set('view engine', 'jade');*/
 
 app.set('view engine', 'jsx');
 app.engine('jsx', require('express-react-views').createEngine());
-
-
-
-
-
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -32,29 +31,35 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //验证登录中间件
-app.get(/(index|detail)/, function(req, res, next){
-    var cookie = req.cookies;
+/*app.get(/(myblog)/, (req, res, next) => {
+    let cookie = req.cookies;
+    let isLogin = req.url === '/myblog/login';
+    let isNext = function(){
+        isLogin ? next() : res.redirect('/myblog/login');
+    };
     if(util.isObject(cookie) && cookie.pass && cookie.time){
-        var sql = "select * from login where password = '" + cookie.pass + "' and time = '" + cookie.time + "'";
+        let sql = "select * from login where password = '" + cookie.pass + "' and time = '" + cookie.time + "'";
         db(sql, function(err, rows, fields){
             if(!err && rows.length){
-                next();
+                isLogin ? res.redirect('/myblog/index') : next();
             }else{
-                res.redirect('/login')
+                isNext();
             }
         });
     }else{
-        res.redirect('/login')
+        isNext();
     }
-});
+});*/
 
 app.use('/', routes);
 app.use('/index', routes);
 app.use('/detail', detail);
 app.use('/message', message);
-app.use('/login', login);
+app.use('/myblog', login);
+app.use('/myblog', myindex);
+
 /// catch 404 and forwarding to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -65,7 +70,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
+    app.use((err, req, res, next) => {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -76,7 +81,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,

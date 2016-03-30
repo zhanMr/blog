@@ -29,7 +29,7 @@ const Login = React.createClass({
         });
         $.ajax({
             type: 'post',
-            url: '/login/login',
+            url: '/myblog/login',
             data: {
                 username: text,
                 password: password
@@ -37,7 +37,7 @@ const Login = React.createClass({
             success: function(msg){
                 self.updateState();
                 if(msg.success){
-                    location.href = '/index';
+                    location.href = '/myblog/index';
                 }else{
                     alert('用户名或密码错误');
                 }
