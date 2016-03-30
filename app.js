@@ -31,7 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //验证登录中间件
-/*app.get(/(myblog)/, (req, res, next) => {
+app.get(/(myblog)/, (req, res, next) => {
     let cookie = req.cookies;
     let isLogin = req.url === '/myblog/login';
     let isNext = function(){
@@ -49,7 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
     }else{
         isNext();
     }
-});*/
+});
 
 app.use('/', routes);
 app.use('/index', routes);

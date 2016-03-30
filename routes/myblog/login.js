@@ -21,11 +21,12 @@ router.post('/login', (req, res) => {
         if(!err && rows.length){
             //记录登录时间
             let time = new Date().getTime();
-            let stamp = time + 900000;
+            //设置缓存有效期一天
+            let stamp = time +  86400000;
             //httpOnly 只能服务端读取cookie
             //expires 缓存过期时间
             let cookieObj = {httpOnly: true, expires: new Date(stamp)};
-            db("update  login set time = " + time + " where username = '" + username + "'", (uerr, urows,ufields)=>{
+            db("update login set time = " + time + " where username = '" + username + "'", (uerr, urows,ufields)=>{
                 if(!uerr){
                     res.cookie("pass", password, cookieObj);
                     res.cookie("time", time, cookieObj);
