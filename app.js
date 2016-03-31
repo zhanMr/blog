@@ -42,7 +42,7 @@ app.get(/myblog/, (req, res, next) => {
         let sql = "select * from login where password = '" + cookie.pass + "' and time = '" + cookie.time + "'";
         db(sql, function(err, rows, fields){
             if(!err && rows.length){
-                isLogin ? res.redirect(loginUrl) : next();
+                isLogin ? res.redirect('/myblog/login') : next();
             }else{
                 isNext();
             }
