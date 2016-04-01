@@ -11,7 +11,8 @@ const routes = require('./routes/index');
 const detail = require('./routes/detail');
 const message = require('./routes/message');
 const login = require('./routes/myblog/login');
-const myindex = require('./routes/myblog/index');
+const myIndex = require('./routes/myblog/index');
+const myMessage = require('./routes/myblog/message');
 const db = require('./service/db');
 const app = express();
 
@@ -42,7 +43,7 @@ app.get(/myblog/, (req, res, next) => {
         let sql = "select * from login where password = '" + cookie.pass + "' and time = '" + cookie.time + "'";
         db(sql, function(err, rows, fields){
             if(!err && rows.length){
-                isLogin ? res.redirect('/myblog/login') : next();
+                isLogin ? res.redirect('/myblog/index') : next();
             }else{
                 isNext();
             }
@@ -57,7 +58,8 @@ app.use('/index', routes);
 app.use('/detail', detail);
 app.use('/message', message);
 app.use('/myblog', login);
-app.use('/myblog', myindex);
+app.use('/myblog', myIndex);
+app.use('/myblog', myMessage);
 
 /// catch 404 and forwarding to error handler
 app.use((req, res, next) => {

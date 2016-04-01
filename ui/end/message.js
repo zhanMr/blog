@@ -12,6 +12,7 @@ const Message = React.createClass({
             data: this.props.data
         }
     },
+    //加载留言
     componentDidMount: function(){
         var self = this;
         $.ajax({
@@ -22,7 +23,7 @@ const Message = React.createClass({
                     data: msg.data
                 });
             },
-            error: function(msg){
+            error: function(){
                 alert('网络错误，请重试!');
             }
         });
@@ -36,22 +37,24 @@ const Message = React.createClass({
                 id: id
             },
             success: function(msg){
+                let data = self.state.data.filter(function(item){
+                    return item.id !== id;
+                });
                 self.setState({
-                    data: msg.data
+                    data: data
                 });
             },
-            error: function(msg){
+            error: function(){
                 alert('网络错误，请重试!');
             }
         });
     },
     render: function() {
-        let data = this.state.data;
         return (
             <div className="panel panel-default">
                 <table className="table">
                     <tbody>
-                        {data.map((item, key) =>{
+                        {this.state.data.map((item, key) =>{
                             return (
                                 <tr key={key}><td>{item.message}</td><td>{item.os}</td><td>{item.time}</td><td onClick={this.removeMessage.bind(this, item.id)}>删除</td></tr>
                             )
