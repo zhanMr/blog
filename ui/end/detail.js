@@ -45,7 +45,7 @@ const Message = React.createClass({
                 });
             },
             error: function(){
-                alert('网络错误，请重试!');
+                alert('网络错误，请重试!!');
             }
         });
     },
@@ -56,7 +56,7 @@ const Message = React.createClass({
                     <tbody>
                         {this.state.data.map((item, key) =>{
                             return (
-                                <tr key={key}><td>{key + 1}</td><td><a href={`/detail_info?id=${item.id}`}>{item.title}</a></td><td>{item.os}</td><td>{item.time}</td><td onClick={this.removeDetail.bind(this, item.id)}>删除</td></tr>
+                                <tr key={key}><td>{key + 1}</td><td><a href={`/myblog/detail_info?id=${item.id}`}>{item.title}</a></td><td>{item.os}</td><td>{item.time}</td><td onClick={this.removeDetail.bind(this, item.id)}>删除</td></tr>
                             )
                         })}
                     </tbody>
