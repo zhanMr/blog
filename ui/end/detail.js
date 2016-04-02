@@ -52,6 +52,7 @@ const Message = React.createClass({
     render: function() {
         return (
             <div className="panel panel-default">
+                <h3><a href="/myblog/detail_info">增加文章~~</a></h3>
                 <table className="table">
                     <tbody>
                         {this.state.data.map((item, key) =>{

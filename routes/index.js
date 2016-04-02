@@ -7,7 +7,7 @@ const db = require('../service/db');
 router.get('/', (req, res) => {
     let page = parseInt(req.query.page) || 1;
     let num = 3;
-    let sql = 'select * from content limit ' + (page - 1)*num + ',' + ((page - 1)*num + 6);
+    let sql = 'select * from content order by id desc limit ' + (page - 1)*num + ',' + ((page - 1)*num + 6);
     db(sql, (err, rows, fields) => {
         res.render('index', { title: '首页' , data: rows, page: page, total: 100});
     })

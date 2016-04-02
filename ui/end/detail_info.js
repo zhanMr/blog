@@ -36,7 +36,7 @@ const Message = React.createClass({
         });
     },
     handleChange: function(e){
-        this.setState({title: e.target.value});
+        this.setState({[e.target.name]: e.target.value});
     },
     //加载留言//
     componentDidMount: function(){
@@ -48,12 +48,14 @@ const Message = React.createClass({
                 id: location.search.replace("?id=","") || 0
             },
             success: function(msg){
-                let data = msg.data[0];
-                self.setState({
-                    title: data.title,
-                    introduction: data.introduction,
-                    content: data.content
-                });
+               if(msg && msg.data && msg.data.length){
+                   let data = msg.data[0];
+                   self.setState({
+                       title: data.title,
+                       introduction: data.introduction,
+                       content: data.content
+                   });
+               }
             },
             error: function(){
                 alert('网络错误，请重试!');
@@ -64,10 +66,10 @@ const Message = React.createClass({
 
         return (
             <div className="panel panel-default">
-                <p><input className="form-control" value={this.state.title} onChange={this.handleChange} ref="title"/></p>
-                <p><textarea className="form-control" value={this.state.introduction} onChange={this.handleChange} style={{height:'100px'}} ref="introduction"></textarea></p>
-                <p><textarea className="form-control" value={this.state.content} onChange={this.handleChange} style={{height:'100px'}} ref="content"></textarea></p>
-                <p><a className="form-control" onClick={this.pullContent}>提交</a></p>
+                <p><input className="form-control" value={this.state.title} onChange={this.handleChange} name="title"/></p>
+                <p><textarea className="form-control" value={this.state.introduction} onChange={this.handleChange} style={{height:'200px'}} name="introduction"></textarea></p>
+                <p><textarea className="form-control" value={this.state.content} onChange={this.handleChange} style={{height:'200px'}} name="content"></textarea></p>
+                <p><a className="form-control" onClick={this.pullContent}>{this.state.title ? '修改' : '提交'}</a></p>
             </div>)
 
     }
