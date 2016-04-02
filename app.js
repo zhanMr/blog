@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //验证登录中间件
 app.get(/myblog/, (req, res, next) => {
+    console.log(req.url);
     let cookie = req.cookies;
     let loginUrl = '/myblog/login';
     let isLogin = req.url === loginUrl;
@@ -63,9 +64,10 @@ app.use('/myblog', myMessage);
 
 /// catch 404 and forwarding to error handler
 app.use((req, res, next) => {
-    var err = new Error('Not Found');
+   /* var err = new Error('Not Found');
     err.status = 404;
-    next(err);
+    next(err);*/
+    res.redirect('/index')
 });
 
 /// error handlers
