@@ -5,10 +5,7 @@ const Login = React.createClass({
         let{title} = this.props;
         return (
             <Layout title={title}>
-                <div className="row">
-                    details
-                </div>
-
+                <div className="row" id="detail"></div>
             </Layout>
         )
     }

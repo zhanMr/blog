@@ -10,7 +10,10 @@ const url = require('url');
 const routes = require('./routes/index');
 const detail = require('./routes/detail');
 const message = require('./routes/message');
+const login = require('./routes/myblog/login');
 const myIndex = require('./routes/myblog/index');
+const myDetail = require('./routes/myblog/detail');
+const myMessage = require('./routes/myblog/message');
 const db = require('./service/db');
 const app = express();
 
@@ -56,7 +59,9 @@ app.use('/index', routes);
 app.use('/detail', detail);
 app.use('/message', message);
 app.use('/myblog', myIndex);
-
+app.use('/myblog', login);
+app.use('/myblog', myDetail);
+app.use('/myblog', myMessage);
 
 /// catch 404 and forwarding to error handler
 app.use((req, res, next) => {
