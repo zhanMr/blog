@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     let num = 3;
     let sql = 'select * from content order by id desc limit ' + (page - 1)*num + ',' + ((page - 1)*num + 9);
     db(sql, (err, rows, fields) => {
-        res.render('index', { title: '首页' , data: rows, page: page, total: 100});
+        res.render('index', { title: '首页' , data: rows, page: page, total: 90});
     })
 });
 

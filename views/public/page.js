@@ -6,10 +6,12 @@ let Page = React.createClass({
         let link = [];
         let startPage = 1;
         //起始页
-        if(page + 5 >= total){
+        if(total < 7 || page < 3){
+            startPage = 1;
+        }else if(page + 6 > total + 2){
             startPage = total - 5;
         }else{
-            startPage = page;
+            startPage = page - 2;
         }
         for(let num = startPage; num <= startPage + 5; num ++){
             link.push(<li><a href={`/${view}?page=${num}`}>{num}</a></li>);

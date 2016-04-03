@@ -2,20 +2,7 @@ const React = require('react');
 const showdown  = require('showdown');
 const converter = new showdown.Converter();
 const Layout = require('./layout');
-const Calendar = require('./calendar');
-const CalendarDemo = React.createClass({
-    getDefaultProps: function(){
-        return {
-            holiday: {
-                '3/8': '妇女节'
-            }
-        }
-    },
-    render: function(){
-        return <Calendar {...this.props}/>;
-    }
-});
-const Index = React.createClass({
+const Detail = React.createClass({
     render: function() {
         let{data, title} = this.props;
         return (
@@ -30,12 +17,10 @@ const Index = React.createClass({
                             <div dangerouslySetInnerHTML={{__html: converter.makeHtml(data.content.toString())}}></div>
                         </article>
                     </div>
-                    <div className="col-md-4" style={{background:"#fff"}}>
-                        <CalendarDemo/>
-                    </div>
+                    <div className="col-md-4" style={{background:"#fff"}}></div>
                 </div>
             </Layout>
         )
     }
 });
-module.exports = Index;
+module.exports = Detail;

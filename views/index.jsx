@@ -17,7 +17,7 @@ const Index = React.createClass({
                                 )
                             })}
                         </div>
-                        <Page page={page} total={Math.ceil(total/5)} view={'index'}/>
+                        <Page page={page} total={Math.ceil(total/9)} view={'index'}/>
                    </Layout>
                 )
         }
