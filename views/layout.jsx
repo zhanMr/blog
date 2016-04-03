@@ -1,6 +1,6 @@
 let React = require('react');
 let Header = require('./header');
-var Layout = React.createClass({
+let Layout = React.createClass({
     render: function() {
         return (
             <html>
@@ -13,7 +13,10 @@ var Layout = React.createClass({
                 <body>
                     <Header/>
                     <div className="container">
-                        {this.props.children}
+                        <div className="row row-offcanvas row-offcanvas-right">
+                            <div className="col-xs-12 col-sm-9">{this.props.children}</div>
+                            <div class="col-xs-6 col-sm-3 sidebar-offcanvas"></div>
+                        </div>
                     </div>
                     <script src="/js/fore_bundle.js"></script>
                 </body>
