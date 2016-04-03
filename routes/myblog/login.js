@@ -2,7 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../service/db');
-
+const tool = require('../../service/tool');
+const toolFun = new tool();
 //登录首页
 router.get('/login', (req, res)=>{
     res.render('myblog/login', { title: '登录'});
