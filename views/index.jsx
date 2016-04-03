@@ -19,21 +19,22 @@ const Index = React.createClass({
             let{data, title, page, total} = this.props;
             return (
                    <Layout title={title}>
-                        <div className="row">
-                            <div className="col-md-8 blog_art">
-                                {data.map((item, key) =>{
-                                    return (
-                                        <article key={key}>
-                                            <h1><a href={`/detail?id=${item.id}`}>{item.title}</a></h1>
-                                            <p className="introduction">{item.introduction}...</p>
-                                        </article>
-                                    )
-                                })}
+                        <div className="row row-offcanvas row-offcanvas-right">
+                            <div className="col-xs-12 col-sm-9">
+                                <div className="media blog">
+                                    {data.map((item, key) =>{
+                                            return (
+                                                <article key={key} className="media">
+                                                    <h3 className="media-heading"><a href={`/detail?id=${item.id}`}>{item.title}</a></h3>
+                                                    <p className="introduction">{item.introduction}</p>
+                                                    <p class="text-left"><a href={`/detail?id=${item.id}`}>阅读全文</a></p>
+                                                </article>
+                                            )
+                                        })}
+                                </div>
                                 <Page page={page} total={Math.ceil(total/5)} view={'index'}/>
                             </div>
-                            <div className="col-md-4" style={{background:"#fff"}}>
-                                <CalendarDemo/>
-                            </div>
+                            <div className="col-xs-6 col-sm-3 sidebar-offcanvas"></div>
                         </div>
                    </Layout>
                 )

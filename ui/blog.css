@@ -1,182 +1,61 @@
-/*test*/
+/*
+ * Style tweaks
+ * --------------------------------------------------
+ */
 html,
 body {
-  color: #505050;
-  line-height: 1.75em;
-  background: #ebebeb;
-  position: relative;
-  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 400;
-  color: #303030;
+body {
+  padding-top: 70px;
 }
-h1 {
-  font-size: 3em;
+footer {
+  padding: 30px 0;
 }
-h2 {
-  font-size: 2.5em;
-}
-h3 {
-  font-size: 2em;
-}
-h4 {
-  font-size: 1.5em;
-}
-h5 {
-  font-size: 1em;
-}
-h6 {
-  font-size: 0.75em;
-}
-a {
-  color: #e67e22;
-  outline: none;
-}
-a:hover {
-  color: #e67e22;
-}
-a:active,
-a:focus,
-a img {
-  outline: none;
-}
-.btn {
-  padding: 7px 14px;
-  border-radius: 2px;
-}
-.btn-default {
-  border: 1px solid #e67e22;
-  background: #e67e22;
-  color: #ffffff;
-  -webkit-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-}
-.btn-default:hover {
-  border: 1px solid #303030;
-  background: #303030;
-  color: #ffffff;
-}
-.btn-default:focus {
-  outline: none;
-}
-.btn-default[disabled] {
-  border: 1px solid #303030;
-  background: #303030;
-  color: #ffffff;
-}
-input[type="search"],
-input[type="text"],
-input[type="url"],
-input[type="email"],
-textarea {
-  padding: 7px 7px;
-  border: 1px solid #ebebeb;
-  border-radius: 2px;
-  -webkit-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  transition: all 0.2s;
-}
-input[type="search"]:focus,
-input[type="text"]:focus,
-input[type="url"]:focus,
-input[type="email"]:focus,
-textarea:focus {
-  border: 1px solid #e67e22;
-  outline: none;
-}
-blockquote {
-  border-left: 4px solid #e67e22;
-}
-pre {
-  padding: 0;
-  background: none;
-  border: none;
-}
-::-moz-selection {
-  color: #ffffff;
-  background: #e67e22;
-  text-shadow: none;
-}
-::selection {
-  color: #ffffff;
-  background: #e67e22;
-  text-shadow: none;
-}
-/*###############################*/
 
-.blog_art article{
-  background:#fff;
-  padding: 10px;
-  margin-bottom:10px;
-  font-size:1.0em
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+@media screen and (max-width: 767px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all .25s ease-out;
+    -o-transition: all .25s ease-out;
+    transition: all .25s ease-out;
+  }
+
+  .row-offcanvas-right {
+    right: 0;
+  }
+
+  .row-offcanvas-left {
+    left: 0;
+  }
+
+  .row-offcanvas-right
+  .sidebar-offcanvas {
+    right: -50%; /* 6 columns */
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -50%; /* 6 columns */
+  }
+
+  .row-offcanvas-right.active {
+    right: 50%; /* 6 columns */
+  }
+
+  .row-offcanvas-left.active {
+    left: 50%; /* 6 columns */
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 50%; /* 6 columns */
+  }
 }
-.blog_art h1{
-  font-size: 2.0em;
-  line-height: 1em;
-  text-align:center
-}
-.jumbotron{
-  background: white;
-  text-align: center;
-  margin-bottom:0px;
-}
-.breadcrumb{
-  text-align: center;
-}
-.cui_cldweek {
-  position:fixed;
-  z-index:2;
-  top:48px;
-  left:0;
-  width:100%;
-  height:auto;
-  overflow:hidden;
-  font:400 12px/24px verdana;
-  border-bottom:1px solid #c8c8c8;
-  background:#f7f7f7
-}
-.cui_cldweek_top0 {
-  top:0
-}
-.cui_cldweek li {
-  float:left;
-  width:14%;
-  text-align:center
-}
-.cui_cldweek li:first-child,.cui_cldweek li:last-child {
-  width:15%;
-  color:#ff902d
-}
-.cui_cldmonth {
-  height:40px;
-  text-align:center;
-  font:400 16px/50px verdana;
-  background:#fff
-}
-.cui_cldunit {
-  margin-bottom:14px
-}
-.cui_cld_daybox {
-  overflow:hidden;
-  background:#fff
-}
-.cui_cld_daybox li {
-  float:left;
-  width:14%;
-  height:40px;
-  padding:4px 0;
-  font:400 14px/45px verdana;
-  overflow:hidden;
-  text-align:center
-}
-.cui_cld_daybox li:nth-of-type(7n),.cui_cld_daybox li:nth-of-type(7n+1) {
-  width:15%;
-  color:#ff902d
-}
+.blog  article{margin-bottom:10px;}
+.blog  article h3{margin-bottom:15px;}
