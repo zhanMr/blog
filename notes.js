@@ -25,10 +25,10 @@ let crytoTime = (crytoArr) => {
         let hash = crypto.createHash(item);
         let time = (new Date()).getTime();
         let data = '';
-        read.on('data',function(chunk){
+        read.on('data',(chunk) => {
             hash.update(chunk);
         })
-        read.on('end',function(){
+        read.on('end',()=>{
             console.log(item, '加密时间',(new Date()).getTime() - time, 'ms');
             console.log(hash.digest('hex'));
         })
@@ -43,10 +43,10 @@ let hmacTime = (crytoArr, key) => {
         let hmac = crypto.createHmac(item, key);
         let time = (new Date()).getTime();
         let data = '';
-        read.on('data',function(chunk){
+        read.on('data',(chunk)=>{
             hmac.update(chunk);
         });
-        read.on('end',function(){
+        read.on('end',()=>{
             console.log(item, '加密时间',(new Date()).getTime() - time, 'ms');
             console.log(hmac.digest('hex'));
         });
@@ -56,7 +56,32 @@ let hmacTime = (crytoArr, key) => {
 //@@ 加密和解密
 //对称加密: 通信一方用KEK加密明文，另一方收到之后用同样的KEY来解密就可以得到明文
 //不对称加密 使用两把完全不同但又是完全匹配的一对Key:公钥和私钥。在使用不对称加密算法加密文件时，只有使用匹配的一对公钥和私钥，才能完成对明文的加密和解密过程
-//
+let encryption = function(crytoArr){
+    crytoArr.forEach((item) => {
+        let read = fs.createReadStream(path.join(__dirname,'webpack.config.js'));
+        let key = "abefg";
+        let enctypted = '';
+        let cipher = crypto.createCipher(item, key);
+        let time = (new Date()).getTime();
+        read.on('data', (chunk)=>{
+            //加密
+            enctypted += cipher.update(chunk, 'binary', 'hex');
+            enctypted += cipher.final('hex');
+        });
+        read.on('end', ()=> {
+            console.log(item, '加密时间',(new Date()).getTime() - time, 'ms');
+            console.log(enctypted);
+            //解密
+            let decrypted = '';
+            let decipher = crypto.createDecipher(item, key);
+            decrypted += decipher.update(enctypted, 'hex', 'binary');
+            decrypted += decipher.final('binary');
+            console.log((new Buffer(decrypted)).toString());
+        })
+    });
+};
+//console.log(crypto.getCiphers());
+//encryption(['blowfish','aes-256-cbc','cast','des','des3','idea','rc2','rc4','seed']);
 //*********************************************************************************************
 
 //*********************************************************************************************
