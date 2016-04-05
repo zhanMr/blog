@@ -5,7 +5,7 @@ let http = require('http');
 let url = require('url');
 let qs = require('querystring');
 let crypto = require('crypto');
-
+let q = require('q');
 //###一些学习笔记
 //*********************************************************************************************
 //###调试方法(Node Inspector)
@@ -13,6 +13,26 @@ let crypto = require('crypto');
 //(2)node-inspector
 //(3)node --debug ./bin/www
 //(4)http://127.0.0.1:8080/debug?port=5858
+//*********************************************************************************************
+
+//*********************************************************************************************
+//###node中实现Promise(https://www.npmjs.com/package/q)
+let readDefer = function(){
+    let deferred = q.defer();//通过延迟对象来创建promise对象
+    fs.readFile(path.join(__dirname, 'webpack.config.js'), 'utf8', (err, content) => {
+        if(err){
+            deferred.reject(new Error(err));
+        }else{
+            deferred.resolve(content);
+        }
+    });
+    return deferred.promise;
+}
+//readDefer().then(function(data){console.log(data)},function(err){console.log(err)});
+let readFcall = function(){
+    return q.nfcall(fs.readFile,path.join(__dirname, 'webpack.config.js', 'utf-8'));
+};
+//readFcall().then(function(data){console.log(data)},function(err){console.log(err)});
 //*********************************************************************************************
 
 //*********************************************************************************************
