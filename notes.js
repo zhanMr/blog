@@ -27,7 +27,7 @@ emitter.on('doing', function(){
     //mode为：设置文件的模式，默认为 0666，可读可写。
     fs.open(path.join(__dirname, 'event.js'), 'w', ()=>{
         let writeStream = fs.createWriteStream(path.join(__dirname, 'event.js'));
-        let writeFile = function(filePath){
+        let writeFile = (filePath) => {
             fs.readdir(filePath, (err, files)=>{
                 if(!err){
                     files.forEach((item) =>{
@@ -52,6 +52,39 @@ emitter.on('doing', function(){
         writeFile(path.join(__dirname, 'routes'));
     });
 });
+//###异步编程解决方案
+//###Promise实现之q.js
+let writeFiles = ()=>{
+    let writeStream;
+    q.nfcall(fs.open, path.join(__dirname, 'event.js'), 'w').then(()=>{
+        writeStream = fs.createWriteStream(path.join(__dirname, 'event.js'));
+        writeFile(path.join(__dirname, 'routes'));
+    });
+    let eachFile = (files,filePath)=>{
+        files.forEach((item)=>{
+            q.nfcall(fs.stat, path.join(filePath, item)).then((file)=>{
+                if(file.isFile()){
+                    let data = '';
+                    let readStream = fs.createReadStream(path.join(filePath, item));
+                    readStream.on('data', (chunk)=>{
+                        data += chunk;
+                    });
+                    readStream.on('end', ()=>{
+                        writeStream.write(data);
+                    });
+                }else if(file.isDirectory()){
+                    return writeFile(path.join(filePath, item));
+                }
+            })
+        })
+    };
+    let writeFile = (filePath)=>{
+        q.nfcall(fs.readdir, filePath).then((files)=>{
+            eachFile(files,filePath);
+        })
+    }
+};
+//writeFiles();
 //emitter.emit('doing');
 //*********************************************************************************************
 //*********************************************************************************************
