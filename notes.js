@@ -1,12 +1,59 @@
 'use strict';
-let fs = require('fs');
-let path = require('path');
-let http = require('http');
-let url = require('url');
-let qs = require('querystring');
-let crypto = require('crypto');
-let q = require('q');
+const fs = require('fs');
+const path = require('path');
+const http = require('http');
+const url = require('url');
+const qs = require('querystring');
+const crypto = require('crypto');
+const q = require('q');
+const events = require('events');
 //###一些学习笔记
+//*********************************************************************************************
+//###事件触发和事件监听
+let emitter = new events.EventEmitter();
+emitter.on('doing', function(){
+    //fs.open( path, flags,  [mode], callback);
+    //'r' - 以只读方式打开文件，当文件不存在的时候发生异常
+    //'r+' - 以读写方式打开文件，当文件不存在的时候发生异常
+    //'rs' - 以只读方式同步打开文件，绕过本地缓存文件进行系统操作
+    //'rs+' - 以读写方式同步打开文件 ，绕过本地缓存文件进行系统操作
+    //'w' - 以只写方式打开文件，当文件不存在时创建文件，或者存在的时候覆盖文件
+    //'wx' - 与'w'一致，但只适用于文件不存在的时候( 测试的时候,，node版本为v0.10.26，如果文件不存在则正常创建文件并且写入数据，但是当文件不存在的时候，报错为必须要写上callback，加上callback后不报错但是不执行任何操作。 )
+    //'w+' - 以读写方式打开文件
+    //'ws+' - 与'w+'一致，但只适用于文件不存在的时候
+    //'a' - 以添加数据的方式打开文件，文件不存在则创建
+    //'a+' - 以添加和读取的方式打开文件，文件不存在则创建
+    //'ax+' - 与'a+'一致，但是存在的时候会失败
+    //mode为：设置文件的模式，默认为 0666，可读可写。
+    fs.open(path.join(__dirname, 'event.js'), 'w', ()=>{
+        let writeStream = fs.createWriteStream(path.join(__dirname, 'event.js'));
+        let writeFile = function(filePath){
+            fs.readdir(filePath, (err, files)=>{
+                if(!err){
+                    files.forEach((item) =>{
+                        fs.stat(path.join(filePath, item), (errs, file)=>{
+                            if(file.isFile()){
+                                let data = '';
+                                let readStream = fs.createReadStream(path.join(filePath, item));
+                                readStream.on('data', (chunk)=>{
+                                    data += chunk;
+                                });
+                                readStream.on('end', ()=>{
+                                    writeStream.write(data);
+                                });
+                            }else if(file.isDirectory()){
+                                return writeFile(path.join(filePath, item));
+                            }
+                        });
+                    });
+                }
+            });
+        };
+        writeFile(path.join(__dirname, 'routes'));
+    });
+});
+//emitter.emit('doing');
+//*********************************************************************************************
 //*********************************************************************************************
 //###调试方法(Node Inspector)
 //(1)npm install -g node-inspector
