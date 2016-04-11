@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import ReactDOM from 'react-dom';
 import React from 'react';
 const Message = React.createClass({
     getInitialState: function(){

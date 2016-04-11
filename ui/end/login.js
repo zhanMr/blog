@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import ReactDom  from 'react-dom';
 import React from 'react';
 const Login = React.createClass({
     getInitialState: function(){
