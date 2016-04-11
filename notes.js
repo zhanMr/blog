@@ -7,7 +7,36 @@ const qs = require('querystring');
 const crypto = require('crypto');
 const q = require('q');
 const events = require('events');
+const querystring = require('querystring');
 //###一些学习笔记
+//*********************************************************************************************
+//###http
+let server = http.createServer((req, res)=>{
+    if(req.url != '/favicon.ico'){
+        //console.log(querystring.parse(url.parse(req.url).query));
+    }
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('hello');
+}).listen(1337, '127.0.0.1');
+//*********************************************************************************************
+//*********************************************************************************************
+//###querystring
+let readQueryString = function(){
+    console.log(querystring.parse('foo=bar&baz=qux&baz=quux&corge'));
+    //{ foo: 'bar', baz: [ 'qux', 'quux' ], corge: '' }
+    console.log(querystring.stringify({ foo: 'bar', baz: [ 'qux', 'quux' ], corge: '' }));
+    //foo=bar&baz=qux&baz=quux&corge=
+    console.log(querystring.stringify({ foo: 'bar', baz: [ 'qux', 'quux' ], corge: '' }, '|'));
+    //foo=bar|baz=qux|baz=quux|corge=
+    console.log(querystring.stringify({ foo: 'bar', baz: [ 'qux', 'quux' ], corge: '' }, '|', '$'));
+    //foo=bar&baz=qux&baz=quux&corge=
+    console.log(querystring.escape('foo=bar&baz=qux&baz=quux&corge'));
+    //foo%3Dbar%26baz%3Dqux%26baz%3Dquux%26corge
+    console.log(querystring.unescape('foo%3Dbar%26baz%3Dqux%26baz%3Dquux%26corge'));
+    //foo=bar&baz=qux&baz=quux&corge
+}
+//readQueryString();
+//*********************************************************************************************
 //*********************************************************************************************
 //###事件触发和事件监听
 let emitter = new events.EventEmitter();
